@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="GET" action="/" class="field has-addons">
+        <div class="control is-expanded">
+            <input class="input" type="text" name="query" placeholder="Search..." value="{{ search_query if search_query else '' }}">
+        </div>
+        <div class="control">
+            <button class="button is-dark">Search</button>
+        </div>
+    </form>
+
+    {% if search_query %}
+    <h2 class="title mt-5">Search Results for "{{ search_query }}"</h2>
+    {% else %}
+    <h2 class="title mt-5">Featured Videos</h2>
+    <p class="subtitle">Last Page Update: {{ last_update }}</p>
+    {% endif %}
+
+    <div class="columns is-multiline">
+        {% for video in videos %}
+        <div class="column is-one-quarter">
+            <div class="card">
+                <a href="/video/{{ video.link.split('com/')[1] }}">
+                    <div class="card-image">
+                        <figure class="image is-4by3">
+                            <img src="{{ video.thumbnail }}" alt="{{ video.title }}">
+                            <span class="tag is-dark duration-tag">{{ video.duration }}</span>
+                            <span class="tag is-dark bg-primary views-tag">{{ video.views }} Views</span>
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <p class="is-5 video-title">{{ video.title }}</p>
+                        <p class="subtitle is-6">by {{ video.author }}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <ul class="pagination-list">
+            {% if current_page > 1 %}
+            <li>
+                <a class="pagination-link" href="?query={{ search_query }}&page={{ current_page - 1 }}" aria-label="Previous">
+                    <span class="icon">
+                        &lt;
+                    </span>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <span class="pagination-link" aria-label="Previous">
+                    <span class="icon">
+                        &lt;
+                    </span>
+                </span>
+            </li>
+            {% endif %}
+
+            {% for page in range(1, total_pages + 1) %}
+                {% if page == current_page %}
+                <li>
+                    <span class="pagination-link bg-primary" aria-label="Page {{ page }}">{{ page }}</span>
+                </li>
+                {% else %}
+                <li>
+                    <a class="pagination-link" href="?query={{ search_query }}&page={{ page }}">{{ page }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if current_page < total_pages %}
+            <li>
+                <a class="pagination-link" href="?query={{ search_query }}&page={{ current_page + 1 }}" aria-label="Next">
+                    <span class="icon">
+                        &gt;
+                    </span>
+                </a>
+            </li>
+            {% else %}
+            <li>
+                <span class="pagination-link" aria-label="Next">
+                    <span class="icon">
+                        &gt;
+                    </span>
+                </span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

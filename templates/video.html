@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container is-fluid">
+        <div class="card">
+            <div class="card-content">
+                <!-- Title and Tags Container -->
+                <div class="content">
+                    <h2 class="title is-size-4">{{ video.title }}</h2>
+                    {% if video.tags %}
+                        <div class="tags mt-1">
+                            <div class="tags-list">
+                                {% for tag in video.tags %}
+                                    <a class="tag is-dark" href="/?query={{ tag.name }}">{{ tag.name }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Video Player -->
+                <div class="video-player mt-4">
+                    <video class="video is-fullwidth" controls autoplay>
+                        <source src="{{ video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
