@@ -1,5 +1,7 @@
 # PrivacyVideos
 
+<img src="https://github.com/CyberDefenseEd/PrivacyVideos/blob/main/assets/example.png?raw=true">
+
 PrivacyVideos is a free, open-source, privacy-focused front-end for X-Videos. It is designed to enhance your privacy while accessing adult content, addressing the common concerns associated with mainstream and smaller adult websites.
 
 ## Why PrivacyVideos?
